@@ -11,7 +11,7 @@ function Signup({ onSwitch }) {
 
     const handleSignup = async () => {
         try {
-            const response = await fetch("http://localhost:8080/api/auth/register", {
+            const response = await fetch("https://sigmagpt-sne6.onrender.com/api/auth/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
