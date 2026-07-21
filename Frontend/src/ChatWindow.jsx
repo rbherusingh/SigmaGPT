@@ -1,13 +1,50 @@
 import "./ChatWindow.css";
 import Chat from "./Chat.jsx";
 import { MyContext } from "./MyContext.jsx";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import {ScaleLoader} from "react-spinners";
 
 function ChatWindow() {
     const {prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat, setUser} = useContext(MyContext);
     const [loading, setLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+    // Keyboard aane pe height adjust karo
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowHeight(window.visualViewport ? window.visualViewport.height : window.innerHeight);
+        };
+
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', handleResize);
+        } else {
+            window.addEventListener('resize', handleResize);
+        }
+
+        return () => {
+            if (window.visualViewport) {
+                window.visualViewport.removeEventListener('resize', handleResize);
+            } else {
+                window.removeEventListener('resize', handleResize);
+            }
+        };
+    }, []);
+
+    // Dropdown band karo bahar tap karne pe
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (isOpen && !e.target.closest('.userIconDiv') && !e.target.closest('.dropDown')) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleOutsideClick);
+        document.addEventListener('touchstart', handleOutsideClick);
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+            document.removeEventListener('touchstart', handleOutsideClick);
+        };
+    }, [isOpen]);
 
     const getReply = async () => {
         if(!prompt.trim()) return;
@@ -73,7 +110,7 @@ function ChatWindow() {
     };
 
     return (
-        <div className="chatWindow">
+        <div className="chatWindow" style={{height: `${windowHeight}px`}}>
             <div className="navbar">
                 <span>SigmaGPT <i className="fa-solid fa-chevron-down"></i></span>
                 <div className="userIconDiv" onClick={handleProfileClick}>

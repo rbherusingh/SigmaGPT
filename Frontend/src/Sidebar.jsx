@@ -74,17 +74,30 @@ function Sidebar() {
 
     return (
         <>
-            <button className="hamburger" onClick={() => setIsOpen(!isOpen)}>
-                <i className="fa-solid fa-bars"></i>
-            </button>
-
-            {isOpen && <div className="sidebar-overlay" onClick={() => setIsOpen(false)}></div>}
-
-            <section className={`sidebar ${isOpen ? "open" : ""}`}>
-                <button onClick={createNewChat}>
-                    <img src="/blacklogo.png" alt="gpt logo" className="logo"></img>
-                    <span><i className="fa-solid fa-pen-to-square"></i></span>
+            {/* Hamburger — sidebar ke bahar, sirf tab dikhe jab sidebar band ho */}
+            {!isOpen && (
+                <button className="hamburger" onClick={() => setIsOpen(true)}>
+                    <i className="fa-solid fa-bars"></i>
                 </button>
+            )}
+
+            {/* Overlay */}
+            {isOpen && (
+                <div className="sidebar-overlay" onClick={() => setIsOpen(false)}></div>
+            )}
+
+            {/* Sidebar */}
+            <section className={`sidebar ${isOpen ? "open" : ""}`}>
+                {/* Sidebar ke andar hamburger — sirf tab dikhe jab open ho */}
+                <div className="sidebarTop">
+                    <button className="sidebarHamburger" onClick={() => setIsOpen(false)}>
+                        <i className="fa-solid fa-bars"></i>
+                    </button>
+                    <button className="newChatBtn" onClick={createNewChat}>
+                        <img src="/blacklogo.png" alt="gpt logo" className="logo"></img>
+                        <i className="fa-solid fa-pen-to-square"></i>
+                    </button>
+                </div>
 
                 <ul className="history">
                     {

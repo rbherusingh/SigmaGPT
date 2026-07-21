@@ -136,3 +136,30 @@ button:hover {
         z-index: 998;
     }
 }
+
+.sidebarTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.sidebarHamburger {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 8px;
+    margin: 0;
+}
+
+.newChatBtn {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px;
+    margin: 0;
+}
