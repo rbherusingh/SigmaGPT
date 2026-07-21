@@ -1,0 +1,70 @@
+/* Scroll Container */
+.chatScroll {
+    flex: 1;
+    width: 100%;
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+
+/* Chrome, Edge */
+.chatScroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chatScroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chatScroll::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 10px;
+    transition: background 0.2s;
+}
+
+.chatScroll:hover::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.chatScroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+/* Chat Content */
+.chats {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* User Message */
+.userDiv {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.9rem;
+}
+
+.userMessage {
+    background-color: #323232;
+    padding: 10px 20px;
+    border-radius: 14px;
+    margin-left: 15rem;
+    max-width: 500px;
+    width: fit-content;
+}
+
+/* GPT Message */
+.gptDiv {
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+/* Code Blocks */
+.hljs {
+    border-radius: 14px !important;
+}
+
+pre {
+    white-space: pre-wrap;
+}
