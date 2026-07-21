@@ -126,10 +126,22 @@ input:focus {
     border-radius: 6px;
 }
 
-/* Mobile */
+
+
+
 @media (max-width: 768px) {
+    .chatWindow {
+        height: 100dvh;
+        width: 100vw;
+        overflow: hidden;
+    }
+
+    .navbar {
+        padding: 0 1rem;
+    }
+
     .navbar span {
-        margin: 1rem;
+        margin: 1rem 1rem 1rem 3.5rem;
         font-size: 0.9rem;
     }
 
@@ -139,6 +151,12 @@ input:focus {
 
     .inputBox {
         padding: 0 10px;
+        max-width: 100%;
+    }
+
+    input {
+        font-size: 16px;
+        padding: 15px 50px 15px 15px;
     }
 
     .dropDown {
@@ -148,5 +166,6 @@ input:focus {
 
     .info {
         font-size: 0.7rem;
+        padding: 0.3rem;
     }
 }
