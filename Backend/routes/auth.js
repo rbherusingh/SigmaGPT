@@ -25,6 +25,8 @@ router.post("/register", async (req, res) => {
 
         res.cookie("token", token, {
             httpOnly: true,
+            sameSite: "none",
+            secure: true,
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
 
@@ -56,6 +58,8 @@ router.post("/login", async (req, res) => {
 
         res.cookie("token", token, {
             httpOnly: true,
+            sameSite: "none",
+            secure: true,
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
 
@@ -69,11 +73,15 @@ router.post("/login", async (req, res) => {
 
 // Logout
 router.post("/logout", (req, res) => {
-    res.clearCookie("token");
+    res.clearCookie("token", {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true
+    });
     res.json({ success: true });
 });
 
-// Check auth (page refresh pe bhi login rahe)
+// Check auth
 router.get("/me", async (req, res) => {
     const token = req.cookies?.token;
     if (!token) return res.status(401).json({ error: "Not authenticated" });

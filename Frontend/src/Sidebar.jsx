@@ -1,10 +1,11 @@
 import "./Sidebar.css";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MyContext } from "./MyContext.jsx";
 import {v1 as uuidv1} from "uuid";
 
 function Sidebar() {
     const {allThreads, setAllThreads, currThreadId, setNewChat, setPrompt, setReply, setCurrThreadId, setPrevChats} = useContext(MyContext);
+    const [isOpen, setIsOpen] = useState(false);
 
     const getAllThreads = async () => {
         try {
@@ -32,10 +33,12 @@ function Sidebar() {
         setReply(null);
         setCurrThreadId(uuidv1());
         setPrevChats([]);
+        setIsOpen(false);
     }
 
     const changeThread = async (newThreadId) => {
         setCurrThreadId(newThreadId);
+        setIsOpen(false);
         try {
             const response = await fetch(`https://sigmagpt-sne6.onrender.com/api/thread/${newThreadId}`);
             if(!response.ok) {
@@ -70,35 +73,43 @@ function Sidebar() {
     }
 
     return (
-        <section className="sidebar">
-            <button onClick={createNewChat}>
-                <img src="/blacklogo.png" alt="gpt logo" className="logo"></img>
-                <span><i className="fa-solid fa-pen-to-square"></i></span>
+        <>
+            <button className="hamburger" onClick={() => setIsOpen(!isOpen)}>
+                <i className="fa-solid fa-bars"></i>
             </button>
 
-            <ul className="history">
-                {
-                    allThreads?.map((thread, idx) => (
-                        <li key={idx} 
-                            onClick={(e) => changeThread(thread.threadId)}
-                            className={thread.threadId === currThreadId ? "highlighted": " "}
-                        >
-                            {thread.title}
-                            <i className="fa-solid fa-trash"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    deleteThread(thread.threadId);
-                                }}
-                            ></i>
-                        </li>
-                    ))
-                }
-            </ul>
- 
-            <div className="sign">
-                <p>By Bheru Singh &hearts;</p>
-            </div>
-        </section>
+            {isOpen && <div className="sidebar-overlay" onClick={() => setIsOpen(false)}></div>}
+
+            <section className={`sidebar ${isOpen ? "open" : ""}`}>
+                <button onClick={createNewChat}>
+                    <img src="/blacklogo.png" alt="gpt logo" className="logo"></img>
+                    <span><i className="fa-solid fa-pen-to-square"></i></span>
+                </button>
+
+                <ul className="history">
+                    {
+                        allThreads?.map((thread, idx) => (
+                            <li key={idx} 
+                                onClick={(e) => changeThread(thread.threadId)}
+                                className={thread.threadId === currThreadId ? "highlighted": " "}
+                            >
+                                {thread.title}
+                                <i className="fa-solid fa-trash"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        deleteThread(thread.threadId);
+                                    }}
+                                ></i>
+                            </li>
+                        ))
+                    }
+                </ul>
+     
+                <div className="sign">
+                    <p>By Bheru Singh &hearts;</p>
+                </div>
+            </section>
+        </>
     )
 }
 
