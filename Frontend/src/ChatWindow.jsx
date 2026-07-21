@@ -110,7 +110,13 @@ function ChatWindow() {
     };
 
     return (
-        <div className="chatWindow" style={{height: `${windowHeight}px`}}>
+        <div className="chatWindow" style={{
+    height: `${windowHeight}px`,
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%'
+}}>
             <div className="navbar">
                 <span>SigmaGPT <i className="fa-solid fa-chevron-down"></i></span>
                 <div className="userIconDiv" onClick={handleProfileClick}>
