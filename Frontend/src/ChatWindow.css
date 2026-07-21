@@ -16,7 +16,6 @@
 }
 
 /* navbar */
-
 .navbar {
     width: 100%;
     display: flex;
@@ -101,14 +100,12 @@ input:focus {
     color: #b4b4b4;
 }
 
-/* dropdown css */
-
+/* dropdown */
 .dropDown {
     position: absolute;
     top: 4rem;
     right: 4rem;
     width: 150px;
-
     background-color: #323232;
     padding: 0.3rem 0.5rem;
     border-radius: 6px;
@@ -124,8 +121,32 @@ input:focus {
     cursor: pointer;
 }
 
-
 .dropDownItem:hover {
     background-color: rgba(180, 180, 180, 0.1);
     border-radius: 6px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .navbar span {
+        margin: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .userIconDiv {
+        margin: 1rem;
+    }
+
+    .inputBox {
+        padding: 0 10px;
+    }
+
+    .dropDown {
+        right: 1rem;
+        top: 3.5rem;
+    }
+
+    .info {
+        font-size: 0.7rem;
+    }
 }
