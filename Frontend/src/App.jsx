@@ -20,7 +20,7 @@ function App() {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const response = await fetch("http://localhost:8080/api/auth/me", {
+                const response = await fetch("https://sigmagpt-sne6.onrender.com/api/auth/me", {
                     credentials: "include"
                 });
                 const res = await response.json();

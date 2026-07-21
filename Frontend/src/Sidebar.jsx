@@ -8,7 +8,7 @@ function Sidebar() {
 
     const getAllThreads = async () => {
         try {
-            const response = await fetch("http://localhost:8080/api/thread");
+            const response = await fetch("https://sigmagpt-sne6.onrender.com/api/thread");
             if(!response.ok) {
                 alert("Threads load nahi hue, dobara try karo.");
                 return;
@@ -37,7 +37,7 @@ function Sidebar() {
     const changeThread = async (newThreadId) => {
         setCurrThreadId(newThreadId);
         try {
-            const response = await fetch(`http://localhost:8080/api/thread/${newThreadId}`);
+            const response = await fetch(`https://sigmagpt-sne6.onrender.com/api/thread/${newThreadId}`);
             if(!response.ok) {
                 alert("Chat load nahi hua, dobara try karo.");
                 return;
@@ -54,7 +54,7 @@ function Sidebar() {
 
     const deleteThread = async (threadId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/thread/${threadId}`, {method: "DELETE"});
+            const response = await fetch(`https://sigmagpt-sne6.onrender.com/api/thread/${threadId}`, {method: "DELETE"});
             if(!response.ok) {
                 alert("Thread delete nahi hua, dobara try karo.");
                 return;
