@@ -1,8 +1,6 @@
 import './App.css';
 import Sidebar from "./Sidebar.jsx";
 import ChatWindow from "./ChatWindow.jsx";
-import Login from "./Login.jsx";
-import Signup from "./Signup.jsx";
 import { MyContext } from "./MyContext.jsx";
 import { useState, useEffect } from 'react';
 import { v1 as uuidv1 } from "uuid";
@@ -15,7 +13,6 @@ function App() {
     const [newChat, setNewChat] = useState(true);
     const [allThreads, setAllThreads] = useState([]);
     const [user, setUser] = useState(null);
-    const [showLogin, setShowLogin] = useState(true);
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -44,19 +41,10 @@ function App() {
 
     return (
         <MyContext.Provider value={providerValues}>
-            {!user ? (
-                <div className="authWrapper">
-                    {showLogin
-                        ? <Login onSwitch={() => setShowLogin(false)} />
-                        : <Signup onSwitch={() => setShowLogin(true)} />
-                    }
-                </div>
-            ) : (
-                <div className='app'>
-                    <Sidebar />
-                    <ChatWindow />
-                </div>
-            )}
+            <div className='app'>
+                <Sidebar />
+                <ChatWindow />
+            </div>
         </MyContext.Provider>
     );
 }

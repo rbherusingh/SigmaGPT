@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { MyContext } from "./MyContext";
 import "./Auth.css";
 
-function Login({ onSwitch }) {
+function Login({ onSwitch, onSuccess }) {
     const { setUser } = useContext(MyContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -10,7 +10,7 @@ function Login({ onSwitch }) {
 
     const handleLogin = async () => {
         try {
-           const response = await fetch("https://sigmagpt-sne6.onrender.com/api/auth/login", {
+            const response = await fetch("https://sigmagpt-sne6.onrender.com/api/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -19,6 +19,7 @@ function Login({ onSwitch }) {
             const res = await response.json();
             if (!response.ok) return setError(res.error);
             setUser(res.name);
+            if (onSuccess) onSuccess();
         } catch (err) {
             setError("Something went wrong");
         }

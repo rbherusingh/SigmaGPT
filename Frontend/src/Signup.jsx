@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { MyContext } from "./MyContext";
 import "./Auth.css";
 
-function Signup({ onSwitch }) {
+function Signup({ onSwitch, onSuccess }) {
     const { setUser } = useContext(MyContext);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -20,6 +20,7 @@ function Signup({ onSwitch }) {
             const res = await response.json();
             if (!response.ok) return setError(res.error);
             setUser(res.name);
+            if (onSuccess) onSuccess();
         } catch (err) {
             setError("Something went wrong");
         }
