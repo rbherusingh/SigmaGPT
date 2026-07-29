@@ -19,7 +19,9 @@ function Sidebar() {
 
     const getAllThreads = async () => {
         try {
-            const response = await fetch("https://sigmagpt-sne6.onrender.com/api/thread");
+            const response = await fetch("https://sigmagpt-sne6.onrender.com/api/thread", {
+                credentials: "include"
+            });
             if (!response.ok) { alert("Threads load nahi hue, dobara try karo."); return; }
             const res = await response.json();
             setAllThreads(res.map(thread => ({ threadId: thread.threadId, title: thread.title })));
@@ -30,6 +32,18 @@ function Sidebar() {
     };
 
     useEffect(() => { getAllThreads(); }, [currThreadId]);
+
+    // Dropdown se login/signup modal open karne ke liye
+    useEffect(() => {
+        const openLogin = () => { setShowLogin(true); setShowAuthModal(true); };
+        const openSignup = () => { setShowLogin(false); setShowAuthModal(true); };
+        document.addEventListener('openLogin', openLogin);
+        document.addEventListener('openSignup', openSignup);
+        return () => {
+            document.removeEventListener('openLogin', openLogin);
+            document.removeEventListener('openSignup', openSignup);
+        };
+    }, []);
 
     const createNewChat = () => {
         setNewChat(true);

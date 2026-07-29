@@ -44,10 +44,8 @@ function ChatWindow() {
 
     const getReply = async () => {
         if (!prompt.trim()) return;
-
         setLoading(true);
         setNewChat(false);
-
         try {
             const response = await fetch("https://sigmagpt-sne6.onrender.com/api/chat", {
                 method: "POST",
@@ -56,19 +54,16 @@ function ChatWindow() {
                 body: JSON.stringify({ message: prompt, threadId: currThreadId })
             });
             const res = await response.json();
-
             if (!response.ok) {
                 alert("Message send nahi hua, dobara try karo.");
                 setLoading(false);
                 return;
             }
-
             setReply(res.reply);
         } catch (err) {
             alert("Server se connection nahi ho pa raha.");
             console.log(err);
         }
-
         setLoading(false);
     };
 
@@ -93,16 +88,21 @@ function ChatWindow() {
             console.log(err);
         }
         setUser(null);
+        setIsOpen(false);
+    };
+
+    const handleLoginClick = () => {
+        setIsOpen(false);
+        document.dispatchEvent(new CustomEvent('openLogin'));
+    };
+
+    const handleSignupClick = () => {
+        setIsOpen(false);
+        document.dispatchEvent(new CustomEvent('openSignup'));
     };
 
     return (
-        <div className="chatWindow" style={{
-            height: `${windowHeight}px`,
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%'
-        }}>
+        <div className="chatWindow" style={{ height: `${windowHeight}px` }}>
             <div className="navbar">
                 <span>SigmaGPT <i className="fa-solid fa-chevron-down"></i></span>
                 <div className="userIconDiv" onClick={() => setIsOpen(!isOpen)}>
@@ -112,19 +112,26 @@ function ChatWindow() {
 
             {isOpen && (
                 <div className="dropDown">
-                    <div className="dropDownItem"><i className="fa-solid fa-gear"></i> Settings</div>
-                    <div className="dropDownItem"><i className="fa-solid fa-cloud-arrow-up"></i> Upgrade plan</div>
+                    <div className="dropDownItem">
+                        <i className="fa-solid fa-gear"></i> Settings
+                    </div>
+                    <div className="dropDownItem">
+                        <i className="fa-solid fa-cloud-arrow-up"></i> Upgrade plan
+                    </div>
+
                     {user ? (
                         <div className="dropDownItem" onClick={handleLogout}>
                             <i className="fa-solid fa-arrow-right-from-bracket"></i> Log out
                         </div>
                     ) : (
-                        <div className="dropDownItem" onClick={() => {
-                            setIsOpen(false);
-                            // sidebar open karne ka signal — user sidebar se login kare
-                        }}>
-                            <i className="fa-solid fa-right-to-bracket"></i> Log in
-                        </div>
+                        <>
+                            <div className="dropDownItem" onClick={handleLoginClick}>
+                                <i className="fa-solid fa-right-to-bracket"></i> Log in
+                            </div>
+                            <div className="dropDownItem" onClick={handleSignupClick}>
+                                <i className="fa-solid fa-user-plus"></i> Sign Up
+                            </div>
+                        </>
                     )}
                 </div>
             )}
