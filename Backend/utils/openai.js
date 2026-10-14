@@ -1,6 +1,5 @@
 import "dotenv/config";
 
-
 const getGroqAPIResponse = async (message) => {
     const options = {
         method: "POST",
@@ -20,9 +19,23 @@ const getGroqAPIResponse = async (message) => {
     try {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", options);
         const data = await response.json();
-        return data.choices[0].message.content;  // ✅ return karo
+
+        // ✅ YE CHECK ADD KIYA
+        if (!response.ok) {
+            console.log("Groq Error:", response.status, data);
+            throw new Error(`Groq API failed: ${response.status}`);
+        }
+
+        // ✅ YE BHI CHECK KARO
+        if (!data.choices || data.choices.length === 0) {
+            throw new Error("No response from Groq");
+        }
+
+        return data.choices[0].message.content;
+
     } catch(err) {
-        console.log(err);
+        console.log("getGroqAPIResponse Error:", err.message);
+        throw err; // ✅ chat.js ke catch mein jayega
     }
 };
 
